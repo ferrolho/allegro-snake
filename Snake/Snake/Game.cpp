@@ -4,46 +4,33 @@ enum _GameState {MainMenu, PlayGame, PauseGame, GameOver};
 _GameState gameState;
 
 /* generating random numbers */
-int random_number (int min, int max)
-{
+int random_number (int min, int max) {
 	max++;
 
 	return ((rand() % (max-min)) + min);
 }
 
 /* returns pixels corresponding to screen width percentage given */
-int get_width (int percentage)
-{
+int get_width (int percentage) {
 	if (!(-100 < percentage && percentage < 100))
-	{
 		return -1;
-	}
 	else
-	{
 		return ((CurrentScreenWidth * percentage) / 100);
-	}	
 }
 
 /* returns pixels corresponding to screen height percentage given */
-int get_height (int percentage)
-{
+int get_height (int percentage) {
 	if (!(-100 < percentage && percentage < 100))
-	{
 		return -1;
-	}
 	else
-	{
 		return ((CurrentScreenHeight * percentage) / 100);
-	}	
 }
 
 /* starting game UI */
-void start_game (bool Fullscreen)
-{
+void start_game (bool Fullscreen) {
 	/* creating display */
 	ALLEGRO_DISPLAY * display;
-	if (Fullscreen)
-	{
+	if (Fullscreen) {
 		/* creating disp_data struct to store supported resolutions */
 		ALLEGRO_DISPLAY_MODE disp_data;
 
@@ -58,14 +45,12 @@ void start_game (bool Fullscreen)
 		/* creating display with different resolutions for different screens */
 		display = al_create_display(CurrentScreenWidth, CurrentScreenHeight);
 	}
-	else
-	{
+	else {
 		al_set_new_display_flags(ALLEGRO_WINDOWED);
 
 		display = al_create_display(CurrentScreenWidth, CurrentScreenHeight);
 	}
-	if (!display)
-	{
+	if (!display) {
 		al_show_native_message_box(display, "Error", "Display Settings", "Couldn't create a display.", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		exit(-1);
 	}
@@ -77,8 +62,7 @@ void start_game (bool Fullscreen)
 	/* creating fonts */
 	ALLEGRO_FONT * font = al_load_font(MainFont, 36, ALLEGRO_ALIGN_CENTER);
 	ALLEGRO_FONT * credits_font = al_load_font(CreditsFont, 20, NULL);
-	if (!font)
-	{
+	if (!font) {
 		al_show_native_message_box(display, "Error", "Could not load font file.", "Have you included the resources in the same directory of the program?", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		exit(-1);
 	}
@@ -88,8 +72,7 @@ void start_game (bool Fullscreen)
 	ALLEGRO_SAMPLE * pressed_button_sound = al_load_sample(PressedButton);
 	ALLEGRO_SAMPLE * eating_apple_sound = al_load_sample(EatApple);
 	ALLEGRO_SAMPLE * game_over_sound = al_load_sample(GameOverSound);
-	if (!over_button_sound || !pressed_button_sound)
-	{
+	if (!over_button_sound || !pressed_button_sound) {
 		al_show_native_message_box(display, "Error", "Could not load one or more sound files.", "Your resources folder must be corrupt, please download it again.", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		exit(-1);
 	}
